@@ -1,0 +1,10 @@
+.item {
+  row-gap: 8px;
+  display: flex;
+  column-gap: 8px;
+  list-style: none;
+  align-items: center;
+}
+.element_item {
+  background-color: #1c1c21;
+}
