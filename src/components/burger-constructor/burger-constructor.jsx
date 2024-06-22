@@ -5,24 +5,10 @@ import {
 import ConstructorList from '../burger-constructor-item-list/burger-constructor-item-list';
 import useModalControl from '../../hooks/use-modal-control';
 import OrderDetails from '../order-details/order-details';
+import { ingredientPropType } from '../../utils/types';
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import PropTypes from 'prop-types'
-
-const ingredientPropType = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  price: PropTypes.number,
-  image: PropTypes.string,
-  image_mobile: PropTypes.string,
-  image_large: PropTypes.string,
-  __v: PropTypes.number
-});
 
 const BurgerConstructor = ({ ingredients }) => {
   const { isShowModal, openModWin, closeModWin } = useModalControl(false);

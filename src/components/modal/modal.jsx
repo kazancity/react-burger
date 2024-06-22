@@ -8,12 +8,13 @@ import PropTypes from 'prop-types'
 const Modal = ({ children, closeModWin, text }) => {
   const rootBody = document.getElementById('modals');
   const closeOnClick = _ => closeModWin();
-  const closeOnEsc = (e) => { if(e.keyCode === 27) closeModWin() };
 
-  useEffect(_ => {document.addEventListener('keydown', closeOnEsc);
-     return _ => document.removeEventListener('keydown', closeOnEsc);
-    },
-    []
+  useEffect(_ => {
+      const closeEsc = e => {if (e.key === 'Escape') closeModWin()};
+      document.addEventListener('keydown', closeEsc);
+      return _ => document.removeEventListener('keydown', closeEsc);
+      },
+      []
   );
 
   return createPortal(

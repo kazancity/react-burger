@@ -1,20 +1,6 @@
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types'
-
-const ingredientPropType = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  price: PropTypes.number,
-  image: PropTypes.string,
-  image_mobile: PropTypes.string,
-  image_large: PropTypes.string,
-  __v: PropTypes.number
-});
+import { ingredientPropType } from '../../utils/types';
+import PropTypes from 'prop-types';
 
 const IngredientDetails = ({ ingredient }) => {
   const { image_large, name, calories, proteins, fat, carbohydrates } = ingredient;
@@ -63,6 +49,6 @@ const IngredientDetails = ({ ingredient }) => {
   );
 };
 
-IngredientDetails.propTypes = { ingredients: PropTypes.arrayOf(ingredientPropType) };
+IngredientDetails.propTypes = { ingredient: ingredientPropType };
 
 export default IngredientDetails;

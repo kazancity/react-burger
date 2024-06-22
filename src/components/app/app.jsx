@@ -11,7 +11,12 @@ function App() {
   useEffect(_ => {
     const getIngredients = _ => {
       fetch(`${domain}/ingredients`)
-        .then((domainRes) => domainRes.json())
+        .then((domainRes) => {if (domainRes.ok ) {
+	    return domainRes.json()
+            } else {
+            setIngredients({ ...ingredients, isLoading: false, isError: true })
+            }
+        })
         .then((domainRes) => domainRes.success && setIngredients({ ...ingredients, isLoading: false, data: domainRes.data }))
         .catch(_ => setIngredients({ ...ingredients, isLoading: false, isError: true }));
     };
@@ -24,7 +29,7 @@ function App() {
     <div className={styles.app}>
       {ingredients.isError &&
         <>
-          Упс, произошла ошибка..
+          Упс, произошла ошибка...
         </>
       }
       {ingredients.isLoading &&

@@ -19,7 +19,7 @@ const AppHeaderItem = ({ iconMenu, textMenu, isActive }) => {
     }
 
   return (
-    <li>
+    <li className={styles.last_item}>
       <a href='/' className={`${styles.menu} ${isActive ? '' : styles.inactive}`}>
         {iconItem}{textMenu}
       </a>

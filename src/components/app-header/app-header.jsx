@@ -8,15 +8,13 @@ const AppHeader = _ => {
       <span className={styles.logo}>
         <Logo />
       </span>
-      <>
-        <nav className={styles.nav}>
-          <ul className={styles.list}>
-            <AppHeaderItem iconMenu='burger' textMenu='Конструктор' isActive />
-            <AppHeaderItem iconMenu='list' textMenu='Лента заказов' />
-            <AppHeaderItem iconMenu='profile' textMenu='Личный кабинет' />
-          </ul>
-        </nav>
-      </>
+      <nav className={styles.nav}>
+        <ul className={styles.list}>
+          <AppHeaderItem iconMenu='burger' textMenu='Конструктор' isActive />
+          <AppHeaderItem iconMenu='list' textMenu='Лента заказов' />
+          <AppHeaderItem iconMenu='profile' textMenu='Личный кабинет' />
+        </ul>
+      </nav>
     </header>
   );
 };
