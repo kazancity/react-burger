@@ -1,0 +1,27 @@
+.nav {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.list {
+  height: 100%;
+  display: flex;
+  row-gap: 8px;
+  column-gap: 8px;
+  align-items: center;
+  list-style-type: none;
+}
+.header {
+  height: 88px;
+  position: relative;
+  background-color: #1c1c21;
+}
+.logo {
+  top: 50%;
+  left: 50%;
+  max-height: 50px;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+}

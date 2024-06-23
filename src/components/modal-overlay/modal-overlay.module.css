@@ -1,0 +1,10 @@
+.overlay {
+  top: 0;
+  left: 0;
+  opacity: 60%;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  background-color: #000;
+}

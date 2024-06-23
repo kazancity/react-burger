@@ -1,0 +1,27 @@
+.ingred_margin {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.counter {
+  position: absolute;
+}
+.ingred_item {
+  row-gap: 8px;
+  display: flex;
+  column-gap: 8px;
+  cursor: pointer;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+}
+.price_item {
+  row-gap: 8px;
+  display: flex;
+  column-gap: 8px;
+  font-size: 28px;
+  line-height: 0.86;
+  align-items: center;
+  font-weight: normal;
+  font-family: "Iceland";
+  justify-content: center;
+}
