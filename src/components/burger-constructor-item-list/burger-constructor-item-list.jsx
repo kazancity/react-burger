@@ -16,8 +16,8 @@ const ConstructorList = ({ ingredients }) => {
         {ingredients
           .filter((ingredient) => ingredient.type === "main")
           .map((ingredient) => (
-            <li>
-              <ConstructorItem key={ingredient._id} ingredient={ingredient} />
+            <li key={ingredient._id}>
+              <ConstructorItem ingredient={ingredient} />
             </li>
           ))}
       </ul>
