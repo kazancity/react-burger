@@ -1,42 +1,47 @@
-import { useEffect, useState } from 'react';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import AppHeader from '../app-header/app-header';
-import styles from './app.module.css';
+import { useEffect, useState } from "react";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import AppHeader from "../app-header/app-header";
+import styles from "./app.module.css";
 
 function App() {
-  const domain = 'https://norma.nomoreparties.space/api';
-  const [ingredients, setIngredients] = useState({ data: null, isError: false, isLoading: true });
+  const domain = "https://norma.nomoreparties.space/api";
+  const [ingredients, setIngredients] = useState({
+    data: null,
+    isError: false,
+    isLoading: true,
+  });
 
-  useEffect(_ => {
-    const getIngredients = _ => {
+  useEffect(() => {
+    const getIngredients = () => {
       fetch(`${domain}/ingredients`)
-        .then((domainRes) => {if (domainRes.ok ) {
-	    return domainRes.json()
-            } else {
-            setIngredients({ ...ingredients, isLoading: false, isError: true })
-            }
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error("Ошибка ${res.status}");
         })
-        .then((domainRes) => domainRes.success && setIngredients({ ...ingredients, isLoading: false, data: domainRes.data }))
-        .catch(_ => setIngredients({ ...ingredients, isLoading: false, isError: true }));
+        .then(
+          (res) =>
+            res.success &&
+            setIngredients({
+              ...ingredients,
+              isLoading: false,
+              data: res.data,
+            }),
+        )
+        .catch((e) => {
+          console.log("Ошибка: " + e.message);
+          setIngredients({ ...ingredients, isLoading: false, isError: true });
+        });
     };
     getIngredients();
-    }, 
-    []
-  );
+  }, []);
 
   return (
     <div className={styles.app}>
-      {ingredients.isError &&
-        <>
-          Упс, произошла ошибка...
-        </>
-      }
-      {ingredients.isLoading &&
-        <>
-          Загружаем приложение, один момент!
-        </>
-      }
+      {ingredients.isError && <>Упс, произошла ошибка...</>}
+      {ingredients.isLoading && <>Загружаем приложение, один момент!</>}
       {ingredients.data && (
         <>
           <AppHeader />

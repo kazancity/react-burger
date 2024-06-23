@@ -12,7 +12,7 @@ h1 {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 20px;
-  font-family: 'Jet Brains Mono';
+  font-family: "Jet Brains Mono";
 }
 .items_group {
   overflow-y: auto;
