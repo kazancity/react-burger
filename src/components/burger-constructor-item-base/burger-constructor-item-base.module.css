@@ -1,0 +1,20 @@
+.item {
+  row-gap: 80px;
+  display: flex;
+  list-style: none;
+  column-gap: 80px;
+  margin-left: 32px;
+  align-items: center;
+}
+.element {
+  background-color: #1c1c21;
+}
+.element > span * {
+  display: none;
+}
+.element > span span {
+  margin: 0;
+  display: block;
+  line-height: 40px;
+  text-align: center;
+}
