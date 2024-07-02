@@ -1,0 +1,9 @@
+.item {
+  row-gap: 8px;
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+}
+.element {
+  background-color: #1c1c21;
+}

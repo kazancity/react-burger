@@ -2,17 +2,17 @@
   margin-left: auto;
 }
 .menu {
+  color: #fff;
   row-gap: 8px;
   display: flex;
-  color: inherit;
   column-gap: 8px;
-  border-radius: 40px;
-  align-items: center;
-  text-decoration: none;
   padding-top: 16px;
-  padding-bottom: 16px;
-  padding-right: 20px;
   padding-left: 20px;
+  border-radius: 40px;
+  padding-right: 20px;
+  align-items: center;
+  padding-bottom: 16px;
+  text-decoration: none;
 }
 .inactive {
   color: #8585ad;

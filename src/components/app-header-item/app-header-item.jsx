@@ -8,13 +8,13 @@ import PropTypes from "prop-types";
 
 const AppHeaderItem = ({ iconMenu, textMenu, isActive }) => {
   let iconItem;
-  if ("burger" == iconMenu) {
+  if ("burger" === iconMenu) {
     iconItem = <BurgerIcon type={isActive ? "primary" : "secondary"} />;
   }
-  if ("list" == iconMenu) {
+  if ("list" === iconMenu) {
     iconItem = <ListIcon type={isActive ? "primary" : "secondary"} />;
   }
-  if ("profile" == iconMenu) {
+  if ("profile" === iconMenu) {
     iconItem = <ProfileIcon type={isActive ? "primary" : "secondary"} />;
   }
 
@@ -22,7 +22,7 @@ const AppHeaderItem = ({ iconMenu, textMenu, isActive }) => {
     <li className={styles.last_item}>
       <a
         href="/"
-        className={`${styles.menu} ${isActive ? "" : styles.inactive}`}
+        className={`${styles.menu} ${isActive ? null : styles.inactive}`}
       >
         {iconItem}
         {textMenu}

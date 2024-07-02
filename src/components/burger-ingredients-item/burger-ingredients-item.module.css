@@ -2,9 +2,6 @@
   margin-left: 16px;
   margin-right: 16px;
 }
-.counter {
-  position: absolute;
-}
 .ingred_item {
   row-gap: 8px;
   display: flex;
