@@ -1,31 +1,34 @@
-import IngredientItem from "../burger-ingredients-item/burger-ingredients-item";
+import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import styles from "./burger-ingredients-item-list.module.css";
 import { ingredientPropType } from "../../utils/types";
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 
-const IngredientGroup = ({ ingredients, name, type }) => {
+const BurgerIngredientsItemList = forwardRef(function BurgerIngredientsItemList(
+  { ingredients, title, type },
+  ref,
+) {
   return (
     <section>
-      <h2>{name}</h2>
+      <h2 ref={ref}>{title}</h2>
       <ul className={styles.item_group}>
         {ingredients
           .filter((ingredient) => ingredient.type === type)
           .map((ingredient) => (
-            <IngredientItem
+            <BurgerIngredientsItem
               key={ingredient._id}
               ingredient={ingredient}
-              counter={1}
             />
           ))}
       </ul>
     </section>
   );
-};
+});
 
-IngredientGroup.propTypes = {
+BurgerIngredientsItemList.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType),
-  name: PropTypes.string,
+  title: PropTypes.string,
   type: PropTypes.string,
 };
 
-export default IngredientGroup;
+export default BurgerIngredientsItemList;
