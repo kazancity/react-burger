@@ -1,4 +1,3 @@
-
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor-item-bun.module.css";
 import { ingredientPropType } from "../../utils/types";

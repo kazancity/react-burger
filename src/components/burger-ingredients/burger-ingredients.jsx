@@ -4,6 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burger-ingredients.module.css";
 import { useEffect, useRef, useState } from "react";
+import { GridLoader } from "react-spinners";
 
 const BurgerIngredients = () => {
   const { isLoading, isError, data } = useSelector(
@@ -28,7 +29,7 @@ const BurgerIngredients = () => {
     const arr = [bunTopCoord, sauceTopCoord, mainTopCoord];
     const closestIndex = arr.findIndex(
       (currElem) =>
-        currElem ==
+        currElem ===
         arr.reduce((accum, item) =>
           item - tabsTopCoord <
           (() =>
@@ -41,13 +42,13 @@ const BurgerIngredients = () => {
     );
 
     setActiveTab("bun");
-    if (0 == closestIndex) {
+    if (0 === closestIndex) {
       if (activeTab !== "bun") setActiveTab("bun");
     }
-    if (1 == closestIndex) {
+    if (1 === closestIndex) {
       if (activeTab !== "sauce") setActiveTab("sauce");
     }
-    if (2 == closestIndex) {
+    if (2 === closestIndex) {
       if (activeTab !== "main") setActiveTab("main");
     }
   };
@@ -67,6 +68,16 @@ const BurgerIngredients = () => {
 
   return (
     <>
+      <GridLoader
+        color="#ffd700"
+        loading={isLoading}
+        cssOverride={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate('-50%', '-50%')",
+        }}
+      />
       {data && (
         <article>
           <h1>Соберите бургер</h1>
