@@ -1,8 +1,8 @@
 import {
+  Page404,
   MainPage,
   LoginPage,
   OrdersPage,
-  Page404,
   ProfilePage,
   RegisterPage,
   IngredientPage,
@@ -13,14 +13,15 @@ import {
   RouteOnlyAuth,
   RouteOnlyUnAuth,
 } from "../protected-route/protected-route";
-import { useEffect } from "react";
-import Modal from "../modal/modal";
-import { useDispatch } from "react-redux";
-import AppHeader from "../app-header/app-header";
-import OrderDetails from "../order-details/order-details";
-import { checkUserAuth } from "../../services/slices/user-slice";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import { getIngredients } from "../../services/slices/burger-ingredients-slice";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { checkUserAuth } from "../../services/slices/user-slice";
+import OrderDetails from "../order-details/order-details";
+import AppHeader from "../app-header/app-header";
+import { useDispatch } from "react-redux";
+import Modal from "../modal/modal";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserAuth());
+    dispatch(getIngredients());
   }, [dispatch]);
 
   return (
