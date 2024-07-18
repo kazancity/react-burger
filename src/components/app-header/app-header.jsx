@@ -14,7 +14,9 @@ const AppHeader = () => {
   return (
     <header className={styles.header}>
       <span className={styles.logo}>
-        <Logo />
+        <NavLink to="/">
+          <Logo />
+        </NavLink>
       </span>
       <nav>
         <ul className={styles.list}>
