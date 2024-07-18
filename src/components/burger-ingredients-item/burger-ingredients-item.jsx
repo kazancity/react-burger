@@ -2,14 +2,11 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { setData } from "../../services/slices/ingredient-details-slice";
-import useModalControl from "../../hooks/use-modal-control";
 import styles from "./burger-ingredients-item.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { ingredientPropType } from "../../utils/types";
+import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import Modal from "../modal/modal";
 import { useMemo } from "react";
 
 const BurgerIngredientsItem = ({ ingredient }) => {
@@ -24,7 +21,6 @@ const BurgerIngredientsItem = ({ ingredient }) => {
     );
   }, [bun, ingredients, ingredient.type, ingredient._id]);
 
-  const { isShowModal, openModWin, closeModWin } = useModalControl(false);
   const { name, image, price } = ingredient;
   const dispatch = useDispatch();
   const [, dragRef] = useDrag({
@@ -32,16 +28,15 @@ const BurgerIngredientsItem = ({ ingredient }) => {
     item: { ingredient },
   });
 
-  const processShowIngredientDetails = () => {
+  const handleShowIngredientDetails = () => {
     dispatch(setData(ingredient));
-    openModWin();
   };
 
   return (
     <>
       <li
         className={styles.ingred_item}
-        onClick={processShowIngredientDetails}
+        onClick={handleShowIngredientDetails}
         ref={dragRef}
       >
         {counter && <Counter count={counter} size="default" />}
@@ -52,15 +47,10 @@ const BurgerIngredientsItem = ({ ingredient }) => {
         </span>
         <span>{name}</span>
       </li>
-      {isShowModal && (
-        <Modal text="Детали ингредиента" closeModWin={closeModWin}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </>
   );
 };
 
-BurgerIngredientsItem.propTypes = { ingredient: ingredientPropType };
+BurgerIngredientsItem.propTypes = { ingredient: ingredientPropType.isRequired };
 
 export default BurgerIngredientsItem;
