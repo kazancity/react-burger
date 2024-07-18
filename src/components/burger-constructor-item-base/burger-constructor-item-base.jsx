@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 const BurgerConstructorItemBase = ({
   text,
-  position = null,
-  extraClass = null,
+  position = "",
+  extraClass = "",
 }) => {
   return (
     <div className={`${styles.item} ${extraClass}`}>
