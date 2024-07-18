@@ -1,17 +1,17 @@
 import {
-  ConstructorElement,
   DragIcon,
+  ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
-  removeIngredient,
   sortIngredients,
+  removeIngredient,
 } from "../../services/slices/burger-сonstructor-slice";
-import styles from "./burger-constructor-item.module.css";
-import { ingredientPropType } from "../../utils/types";
-import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { memo } from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { useDrag, useDrop } from "react-dnd";
+import { ingredientPropType } from "../../utils/types";
+import styles from "./burger-constructor-item.module.css";
 
 const BurgerConstructorItem = memo(function BurgerConstructorItem({
   ingredient,
@@ -62,7 +62,7 @@ const BurgerConstructorItem = memo(function BurgerConstructorItem({
   );
   const opacity = isDragging ? 0 : 1;
 
-  const processRemoveIngredient = (ingredient) => {
+  const handleDeleteIngredient = (ingredient) => {
     dispatch(removeIngredient(ingredient));
   };
 
@@ -78,7 +78,7 @@ const BurgerConstructorItem = memo(function BurgerConstructorItem({
         price={ingredient.price}
         thumbnail={ingredient.image_mobile}
         extraClass={styles.element_item}
-        handleClose={() => processRemoveIngredient(ingredient)}
+        handleClose={() => handleDeleteIngredient(ingredient)}
       />
     </li>
   );
