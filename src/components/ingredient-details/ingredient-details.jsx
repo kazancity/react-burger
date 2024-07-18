@@ -1,38 +1,71 @@
-import { resetData } from "../../services/slices/ingredient-details-slice";
+import {
+  setData,
+  resetData,
+} from "../../services/slices/ingredient-details-slice";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ingredient-details.module.css";
+import { useParams } from "react-router-dom";
+import { GridLoader } from "react-spinners";
 import { useEffect } from "react";
 
 const IngredientDetails = () => {
-  const { name, image_large, calories, proteins, fat, carbohydrates } =
-    useSelector((store) => store.ingredientDetails.data);
-
+  const { id } = useParams();
   const dispatch = useDispatch();
-  useEffect(() => () => dispatch(resetData()), []);
+  const ingredient = useSelector((store) => store.ingredientDetails.data);
+  const { isLoading, data } = useSelector((state) => state.burgerIngredients);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetData());
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!ingredient && data) {
+      dispatch(setData(data.find((ingredient) => ingredient._id === id)));
+    }
+  }, [data, id, dispatch, ingredient]);
 
   return (
     <div className={styles.ingredient}>
-      {name && (
+      <GridLoader
+        color="#8585ad"
+        loading={isLoading}
+        cssOverride={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate('-50%', '-50%')",
+        }}
+      />
+      {ingredient && (
         <>
-          <img src={image_large} alt={name} />
-          <span className={styles.text_main_medium}>{name}</span>
+          <h2>Детали ингредиента</h2>
+          <img src={ingredient.image_large} alt={ingredient.name} />
+          <span className={styles.text_main_medium}>{ingredient.name}</span>
           <div className={styles.nutrition}>
             <div className={styles.nutrition_item}>
               <span className={styles.text_main_default}>Калории, ккал</span>
-              <span className={styles.text_digits_default}>{calories}</span>
+              <span className={styles.text_digits_default}>
+                {ingredient.calories}
+              </span>
             </div>
             <div className={styles.nutrition_item}>
               <span className={styles.text_main_default}>Белки, г</span>
-              <span className={styles.text_digits_default}>{proteins}</span>
+              <span className={styles.text_digits_default}>
+                {ingredient.proteins}
+              </span>
             </div>
             <div className={styles.nutrition_item}>
               <span className={styles.text_main_default}>Жиры, г</span>
-              <span className={styles.text_digits_default}>{fat}</span>
+              <span className={styles.text_digits_default}>
+                {ingredient.fat}
+              </span>
             </div>
             <div className={styles.nutrition_item}>
               <span className={styles.text_main_default}>Углеводы, г</span>
               <span className={styles.text_digits_default}>
-                {carbohydrates}
+                {ingredient.carbohydrates}
               </span>
             </div>
           </div>
