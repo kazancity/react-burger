@@ -1,0 +1,17 @@
+.blue {
+  color: #4c4cff;
+}
+.main {
+  display: flex;
+  max-width: 480px;
+  align-items: center;
+  margin: 180px auto 0;
+  flex-direction: column;
+}
+.form {
+  display: flex;
+  row-gap: 24px;
+  column-gap: 24px;
+  align-items: center;
+  flex-direction: column;
+}
