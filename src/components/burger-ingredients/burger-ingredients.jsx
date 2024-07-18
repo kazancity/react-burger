@@ -1,7 +1,8 @@
-import BurgerIngredientsItemList from "../burger-ingredients-item-list/burger-ingredients-item-list";
+import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
 import { getIngredients } from "../../services/slices/burger-ingredients-slice";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./burger-ingredients.module.css";
 import { useEffect, useRef, useState } from "react";
 import { GridLoader } from "react-spinners";
@@ -10,18 +11,20 @@ const BurgerIngredients = () => {
   const { isLoading, isError, data } = useSelector(
     (state) => state.burgerIngredients,
   );
-  const [activeTab, setActiveTab] = useState("bun");
   const dispatch = useDispatch();
+  const tabsRef = useRef();
+  const groupBunRef = useRef();
   const groupSauceRef = useRef();
   const groupMainRef = useRef();
-  const groupBunRef = useRef();
-  const tabsRef = useRef();
+  const [activeTab, setActiveTab] = useState("bun");
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getIngredients());
+    // eslint-disable-next-line
   }, []);
 
-  const processScrollBurgerIngredientsItemList = () => {
+  const handleScrollIngredientGroup = () => {
     const tabsTopCoord = tabsRef.current.getBoundingClientRect().top;
     const bunTopCoord = groupBunRef.current.getBoundingClientRect().top;
     const sauceTopCoord = groupSauceRef.current.getBoundingClientRect().top;
@@ -53,7 +56,7 @@ const BurgerIngredients = () => {
     }
   };
 
-  const processClickTab = (tab) => {
+  const handleClickTab = (tab) => {
     setActiveTab("bun");
     if ("bun" === tab) {
       groupBunRef.current.scrollIntoView({ behavior: "smooth" });
@@ -69,7 +72,7 @@ const BurgerIngredients = () => {
   return (
     <>
       <GridLoader
-        color="#ffd700"
+        color="#8585ad"
         loading={isLoading}
         cssOverride={{
           position: "absolute",
@@ -78,58 +81,107 @@ const BurgerIngredients = () => {
           transform: "translate('-50%', '-50%')",
         }}
       />
+      {isError && <>Ошибка при загрузке ингредиентов</>}
       {data && (
         <article>
           <h1>Соберите бургер</h1>
-          <div ref={tabsRef} className={styles.items}>
+          <div ref={tabsRef} className={`${styles.items} mb-10`}>
             <Tab
               value="bun"
               active={activeTab === "bun"}
-              onClick={processClickTab}
+              onClick={handleClickTab}
             >
               Булки
             </Tab>
             <Tab
               value="sauce"
               active={activeTab === "sauce"}
-              onClick={processClickTab}
+              onClick={handleClickTab}
             >
               Соусы
             </Tab>
             <Tab
               value="main"
               active={activeTab === "main"}
-              onClick={processClickTab}
+              onClick={handleClickTab}
             >
               Начинки
             </Tab>
           </div>
           <div
             className={styles.items_group}
-            onScroll={processScrollBurgerIngredientsItemList}
+            onScroll={handleScrollIngredientGroup}
           >
-            <BurgerIngredientsItemList
-              ingredients={data}
-              title="Булки"
-              type="bun"
-              ref={groupBunRef}
-            />
-            <BurgerIngredientsItemList
-              ingredients={data}
-              title="Соусы"
-              type="sauce"
-              ref={groupSauceRef}
-            />
-            <BurgerIngredientsItemList
-              ingredients={data}
-              title="Начинки"
-              type="main"
-              ref={groupMainRef}
-            />
+            <section>
+              <h2 className="text text_type_main-medium" ref={groupBunRef}>
+                Булки
+              </h2>
+              <ul className={styles.list}>
+                {data
+                  .filter((ingredient) => ingredient.type === "bun")
+                  .map((ingredient) => (
+                    <Link
+                      className={styles.link}
+                      key={ingredient._id}
+                      to={`/ingredients/${ingredient._id}`}
+                      state={{ backgroundLocation: location }}
+                    >
+                      <BurgerIngredientsItem
+                        key={ingredient._id}
+                        ingredient={ingredient}
+                      />
+                    </Link>
+                  ))}
+              </ul>
+            </section>
+            <section>
+              <h2 className="text text_type_main-medium" ref={groupSauceRef}>
+                Соусы
+              </h2>
+              <ul className={styles.list}>
+                {data
+                  .filter((ingredient) => ingredient.type === "sauce")
+                  .map((ingredient) => (
+                    <Link
+                      className={styles.link}
+                      key={ingredient._id}
+                      to={`/ingredients/${ingredient._id}`}
+                      state={{ backgroundLocation: location }}
+                    >
+                      <BurgerIngredientsItem
+                        key={ingredient._id}
+                        ingredient={ingredient}
+                      />
+                    </Link>
+                  ))}
+              </ul>
+            </section>
+            <section>
+              <h2 className="text text_type_main-medium" ref={groupMainRef}>
+                Начинки
+              </h2>
+              <ul className={styles.list}>
+                {data
+                  .filter((ingredient) => ingredient.type === "main")
+                  .map((ingredient) => (
+                    <Link
+                      className={styles.link}
+                      key={ingredient._id}
+                      to={`/ingredients/${ingredient._id}`}
+                      state={{ backgroundLocation: location }}
+                      replace={true}
+                    >
+                      <BurgerIngredientsItem
+                        key={ingredient._id}
+                        ingredient={ingredient}
+                      />
+                    </Link>
+                  ))}
+              </ul>
+            </section>
           </div>
         </article>
       )}
-      {isError && <>В процессе загрузки ингредиентов произошла ошибка!</>}
     </>
   );
 };
