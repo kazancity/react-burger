@@ -1,28 +1,22 @@
 import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients-item";
-import { getIngredients } from "../../services/slices/burger-ingredients-slice";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./burger-ingredients.module.css";
-import { useEffect, useRef, useState } from "react";
 import { GridLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { useRef, useState } from "react";
 
 const BurgerIngredients = () => {
   const { isLoading, isError, data } = useSelector(
     (state) => state.burgerIngredients,
   );
-  const dispatch = useDispatch();
+
   const tabsRef = useRef();
   const groupBunRef = useRef();
   const groupSauceRef = useRef();
   const groupMainRef = useRef();
   const [activeTab, setActiveTab] = useState("bun");
   const location = useLocation();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-    // eslint-disable-next-line
-  }, []);
 
   const handleScrollIngredientGroup = () => {
     const tabsTopCoord = tabsRef.current.getBoundingClientRect().top;
