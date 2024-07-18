@@ -44,3 +44,13 @@
   line-height: 1.25;
   font-family: "Jet Brains Mono";
 }
+h2 {
+  font-size: 36px;
+  margin-top: 40px;
+  font-weight: bold;
+  align-self: start;
+  line-height: 64px;
+  margin-left: 40px;
+  margin-right: 40px;
+  font-family: "Jet Brains Mono";
+}
