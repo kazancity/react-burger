@@ -7,39 +7,44 @@ import styles from "./modal.module.css";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 
-const Modal = ({ children, closeModWin, text }) => {
+const Modal = ({ children, onClose }) => {
   const { isLoading } = useSelector((store) => store.orderDetails);
 
   useEffect(() => {
     const closeEsc = (e) => {
-      if (e.key === "Escape") closeModWin();
+      if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", closeEsc);
     return () => document.removeEventListener("keydown", closeEsc);
+    // eslint-disable-next-line
   }, []);
 
   return createPortal(
     <>
-      <ModalOverlay onClick={isLoading ? null : closeModWin} />
       {isLoading ? (
-        <GridLoader
-          color="#ffd700"
-          loading={isLoading}
-          cssOverride={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate('-50%', '-50%')",
-          }}
-        />
+        <>
+          <ModalOverlay onClick={null} />
+          <GridLoader
+            color="#8585ad"
+            loading={isLoading}
+            cssOverride={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate('-50%', '-50%')",
+            }}
+          />
+        </>
       ) : (
-        <div className={styles.modal}>
-          {text && <h2 className={styles.main}>{text}</h2>}
-          <span className={styles.close} onClick={closeModWin}>
-            <CloseIcon type="primary" />
-          </span>
-          {children}
-        </div>
+        <>
+          <ModalOverlay onClick={onClose} />
+          <div className={styles.modal}>
+            <span className={styles.close} onClick={onClose}>
+              <CloseIcon type="primary" />
+            </span>
+            {children}
+          </div>
+        </>
       )}
     </>,
     document.getElementById("modals"),
@@ -47,9 +52,8 @@ const Modal = ({ children, closeModWin, text }) => {
 };
 
 Modal.propTypes = {
-  closeModWin: PropTypes.func,
-  children: PropTypes.element,
-  text: PropTypes.string,
+  children: PropTypes.element.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default Modal;

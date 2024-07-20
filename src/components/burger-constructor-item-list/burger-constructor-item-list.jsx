@@ -1,15 +1,15 @@
 import BurgerConstructorItemBase from "../burger-constructor-item-base/burger-constructor-item-base";
 import BurgerConstructorItemBun from "../burger-constructor-item-bun/burger-constructor-item-bun";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import styles from "./burger-constructor-item-list.module.css";
 import { memo, useCallback, useEffect, useState } from "react";
+import styles from "./burger-constructor-item-list.module.css";
 import { useSelector } from "react-redux";
 import update from "immutability-helper";
 import { useDrop } from "react-dnd";
 import PropTypes from "prop-types";
 
 const BurgerConstructorItemList = memo(function BurgerConstructorItemList({
-  dropHandler,
+  onDropHandler,
 }) {
   const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
 
@@ -51,7 +51,7 @@ const BurgerConstructorItemList = memo(function BurgerConstructorItemList({
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient) {
-      dropHandler(ingredient);
+      onDropHandler(ingredient);
     },
   });
 
@@ -87,13 +87,14 @@ const BurgerConstructorItemList = memo(function BurgerConstructorItemList({
           <BurgerConstructorItemBase text="Выберите начинку и соусы" />
         )}
       </ul>
+
       {addBun("bottom")}
     </section>
   );
 });
 
 BurgerConstructorItemList.propTypes = {
-  dropHandler: PropTypes.func.isRequired,
+  onDropHandler: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructorItemList;

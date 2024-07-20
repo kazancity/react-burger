@@ -1,22 +1,21 @@
-import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import {
-  CurrencyIcon,
   Button,
+  CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
 import BurgerConstructorItemList from "../burger-constructor-item-list/burger-constructor-item-list";
-import useModalControl from "../../hooks/use-modal-control";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import { sendOrder } from "../../services/slices/order-details-slice";
 import { addIngredient } from "../../services/slices/burger-сonstructor-slice";
+import { sendOrder } from "../../services/slices/order-details-slice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./burger-constructor.module.css";
+import { useMemo } from "react";
 
 const BurgerConstructor = () => {
-  const { isShowModal, openModWin, closeModWin } = useModalControl(false);
   const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
   const { isLoading } = useSelector((store) => store.burgerIngredients);
+  const { user } = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -28,21 +27,25 @@ const BurgerConstructor = () => {
     );
   }, [bun, ingredients]);
 
-  const processingOrder = () => {
+  const handleSubmitOrder = () => {
+    if (!user) {
+      return navigate("/login", { state: { from: location } });
+    }
+
     if (bun && ingredients.length) {
-      const preparedOrderData = {
+      const preparedData = {
         ingredients: [
           bun._id,
           ...ingredients.map((ingredient) => ingredient._id),
           bun._id,
         ],
       };
-      dispatch(sendOrder(preparedOrderData));
-      openModWin();
+      dispatch(sendOrder(preparedData));
+      navigate("/", { state: { backgroundLocation: location } });
     }
   };
 
-  const processingIngredient = (item) => {
+  const handleIngredientDrop = (item) => {
     dispatch(addIngredient(item.ingredient));
   };
 
@@ -52,7 +55,7 @@ const BurgerConstructor = () => {
         <BurgerConstructorItemList
           bun={bun}
           ingredients={ingredients}
-          dropHandler={processingIngredient}
+          onDropHandler={handleIngredientDrop}
         />
         <div className={styles.order}>
           <span className={styles.checkout}>
@@ -63,16 +66,11 @@ const BurgerConstructor = () => {
             htmlType="button"
             type="primary"
             size="large"
-            onClick={processingOrder}
+            onClick={handleSubmitOrder}
           >
             Оформить заказ
           </Button>
         </div>
-        {isShowModal && (
-          <Modal closeModWin={closeModWin}>
-            <OrderDetails />
-          </Modal>
-        )}
       </article>
     )
   );

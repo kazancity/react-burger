@@ -1,0 +1,9 @@
+.size {
+  height: 575px;
+}
+.ingredient {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 120px 40px 60px;
+}

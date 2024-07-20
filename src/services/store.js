@@ -1,14 +1,16 @@
-import orderDetailsSlice from "./slices/order-details-slice";
-import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import ingredientDetailsSlice from "./slices/ingredient-details-slice";
+import burgerConstructorSlice from "./slices//burger-сonstructor-slice";
+import ingredientDetailsSlice from "./slices//ingredient-details-slice";
 import burgerIngredientsSlice from "./slices/burger-ingredients-slice";
-import burgerConstructorSlice from "./slices/burger-сonstructor-slice";
+import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import orderDetailsSlice from "./slices/order-details-slice";
+import userSlice from "./slices/user-slice";
 
 const rootReducer = combineSlices(
   burgerIngredientsSlice,
   burgerConstructorSlice,
   ingredientDetailsSlice,
   orderDetailsSlice,
+  userSlice,
 );
 
 const preloadedState = {
@@ -16,6 +18,7 @@ const preloadedState = {
   burgerConstructor: { bun: null, ingredients: [] },
   ingredientDetails: { data: null },
   orderDetails: { data: null, isLoading: false, isError: false },
+  user: { user: null, isAuthChecked: false },
 };
 
 export default configureStore({

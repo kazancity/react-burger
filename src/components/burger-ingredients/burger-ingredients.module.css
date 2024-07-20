@@ -30,3 +30,18 @@ h1 {
 .items_group::-webkit-scrollbar-thumb {
   background-color: #8585ad;
 }
+.link {
+  color: #f2f2f3;
+  text-decoration: none;
+}
+.list {
+  display: grid;
+  row-gap: 32px;
+  column-gap: 24px;
+  margin-top: 24px;
+  margin-right: 8px;
+  margin-left: 16px;
+  margin-bottom: 40px;
+  grid-auto-rows: 208px;
+  grid-template-columns: 272px 272px;
+}
