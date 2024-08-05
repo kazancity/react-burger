@@ -3,14 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./order-details.module.css";
 import { Navigate } from "react-router-dom";
 import done from "../../images/done.png";
+import { Store } from "../../types";
 import { useEffect } from "react";
 
 const OrderDetails = () => {
-  const { isError, data } = useSelector((store) => store.orderDetails);
+  const { isError, data } = useSelector((store: Store) => store.orderDetails);
 
   const dispatch = useDispatch();
-  // eslint-disable-next-line
-  useEffect(() => () => dispatch(clearOrder()), []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearOrder());
+    };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={styles.order}>

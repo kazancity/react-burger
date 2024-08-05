@@ -6,22 +6,23 @@ import { passwordResetRequest } from "../../utils/API";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import useForm from "../../hooks/use-form";
+import { FormEvent } from "react";
 
 export default function ForgotPasswordPage() {
   const { formData, onChangeFormData, checkFormData } = useForm({ email: "" });
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (checkFormData.status) {
       passwordResetRequest(formData).then((data) =>
         navigate("/reset-password", { state: { message: data.message } }),
       );
     } else {
-      e.target
+      document
         .querySelector(`[name=${checkFormData.field}]`)
-        .closest(".input")
-        .classList.add("input_status_error");
+        ?.closest(".input")
+        ?.classList.add("input_status_error");
     }
   };
 

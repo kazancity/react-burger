@@ -2,64 +2,62 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./burger-ingredients.module.css";
+import { IngredientType, Store } from "../../types";
 import { GridLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
 
 const BurgerIngredients = () => {
   const { isLoading, isError, data } = useSelector(
-    (state) => state.burgerIngredients,
+    (store: Store) => store.burgerIngredients,
   );
-
-  const tabsRef = useRef();
-  const groupBunRef = useRef();
-  const groupSauceRef = useRef();
-  const groupMainRef = useRef();
-  const [activeTab, setActiveTab] = useState("bun");
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const groupBunRef = useRef<HTMLHeadingElement>(null);
+  const groupSauceRef = useRef<HTMLHeadingElement>(null);
+  const groupMainRef = useRef<HTMLHeadingElement>(null);
+  const [activeTab, setActiveTab] = useState<IngredientType>("bun");
   const location = useLocation();
 
   const handleScrollIngredientGroup = () => {
-    const tabsTopCoord = tabsRef.current.getBoundingClientRect().top;
-    const bunTopCoord = groupBunRef.current.getBoundingClientRect().top;
-    const sauceTopCoord = groupSauceRef.current.getBoundingClientRect().top;
-    const mainTopCoord = groupMainRef.current.getBoundingClientRect().top;
-    const arr = [bunTopCoord, sauceTopCoord, mainTopCoord];
-    const closestIndex = arr.findIndex(
-      (currElem) =>
-        currElem ===
-        arr.reduce((accum, item) =>
-          item - tabsTopCoord <
-          (() =>
-            accum - tabsTopCoord < 0
-              ? 0 - (accum - tabsTopCoord)
-              : accum - tabsTopCoord)()
-            ? item
-            : accum,
-        ),
-    );
+    const tabsTopCoord = tabsRef.current?.getBoundingClientRect().top;
+    const bunTopCoord = groupBunRef.current?.getBoundingClientRect().top;
+    const sauceTopCoord = groupSauceRef.current?.getBoundingClientRect().top;
+    const mainTopCoord = groupMainRef.current?.getBoundingClientRect().top;
+    if (tabsTopCoord && bunTopCoord && sauceTopCoord && mainTopCoord) {
+      const arr: number[] = [bunTopCoord, sauceTopCoord, mainTopCoord];
+      const closestIndex = arr.findIndex(
+        (elem: number) =>
+          elem ===
+          arr.reduce((prev: number, curr: number) =>
+            Math.abs(curr - tabsTopCoord) < Math.abs(prev - tabsTopCoord)
+              ? curr
+              : prev,
+          ),
+      );
 
-    setActiveTab("bun");
-    if (0 === closestIndex) {
-      if (activeTab !== "bun") setActiveTab("bun");
-    }
-    if (1 === closestIndex) {
-      if (activeTab !== "sauce") setActiveTab("sauce");
-    }
-    if (2 === closestIndex) {
-      if (activeTab !== "main") setActiveTab("main");
+      setActiveTab("bun");
+      if (0 === closestIndex) {
+        if (activeTab !== "bun") setActiveTab("bun");
+      }
+      if (1 === closestIndex) {
+        if (activeTab !== "sauce") setActiveTab("sauce");
+      }
+      if (2 === closestIndex) {
+        if (activeTab !== "main") setActiveTab("main");
+      }
     }
   };
 
-  const handleClickTab = (tab) => {
+  const handleClickTab = (tab: string) => {
     setActiveTab("bun");
     if ("bun" === tab) {
-      groupBunRef.current.scrollIntoView({ behavior: "smooth" });
+      groupBunRef.current?.scrollIntoView({ behavior: "smooth" });
     }
     if ("sauce" === tab) {
-      groupSauceRef.current.scrollIntoView({ behavior: "smooth" });
+      groupSauceRef.current?.scrollIntoView({ behavior: "smooth" });
     }
     if ("main" === tab) {
-      groupMainRef.current.scrollIntoView({ behavior: "smooth" });
+      groupMainRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 

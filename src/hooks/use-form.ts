@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { FormData } from "../types";
 
-const useForm = (initialValue) => {
+const useForm = (initialValue: FormData) => {
   const [formData, setFormData] = useState(initialValue);
   const [checkFormData, setCheckFormData] = useState({
     status: false,
-    field: null,
+    field: "",
   });
 
   useEffect(() => {
@@ -13,13 +14,15 @@ const useForm = (initialValue) => {
         return setCheckFormData({ status: false, field: key });
       }
     }
-    setCheckFormData({ status: true, field: null });
+    setCheckFormData({ status: true, field: "" });
   }, [formData]);
 
-  const onChangeFormData = (e, cb) => {
-    const target = e.target;
-    setFormData({ ...formData, [target.name]: target.value });
-    if (cb) return cb(e);
+  const onChangeFormData = (
+    e: ChangeEvent<HTMLInputElement>,
+    cb?: (e: ChangeEvent<HTMLInputElement>) => void,
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (cb) cb(e);
   };
 
   return { formData, onChangeFormData, checkFormData, setFormData };

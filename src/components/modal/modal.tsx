@@ -1,17 +1,24 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { PropsWithChildren, ReactPortal, useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { GridLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
-import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { Store } from "../../types";
 
-const Modal = ({ children, onClose }) => {
-  const { isLoading } = useSelector((store) => store.orderDetails);
+interface ModalProps {
+  onClose: () => void;
+}
+
+const Modal = ({
+  children,
+  onClose,
+}: PropsWithChildren<ModalProps>): ReactPortal => {
+  const { isLoading } = useSelector((store: Store) => store.orderDetails);
 
   useEffect(() => {
-    const closeEsc = (e) => {
+    const closeEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", closeEsc);
@@ -23,7 +30,7 @@ const Modal = ({ children, onClose }) => {
     <>
       {isLoading ? (
         <>
-          <ModalOverlay onClick={null} />
+          <ModalOverlay />
           <GridLoader
             color="#8585ad"
             loading={isLoading}
@@ -47,13 +54,8 @@ const Modal = ({ children, onClose }) => {
         </>
       )}
     </>,
-    document.getElementById("modals"),
+    document.getElementById("modals") as HTMLElement,
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.element.isRequired,
-  onClose: PropTypes.func,
 };
 
 export default Modal;

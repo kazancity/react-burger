@@ -2,22 +2,32 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerConstructorIngredient, Ingredient, Store } from "../../types";
 import { setData } from "../../services/slices/ingredient-details-slice";
 import styles from "./burger-ingredients-item.module.css";
-import { ingredientPropType } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
+import { FC, useMemo } from "react";
 import { useDrag } from "react-dnd";
-import { useMemo } from "react";
 
-const BurgerIngredientsItem = ({ ingredient }) => {
-  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+interface BurgerIngredientItemProps {
+  ingredient: Ingredient;
+}
+
+const BurgerIngredientsItem: FC<BurgerIngredientItemProps> = ({
+  ingredient,
+}) => {
+  const { bun, ingredients } = useSelector(
+    (store: Store) => store.burgerConstructor,
+  );
 
   const counter = useMemo(() => {
     if (ingredient.type === "bun") {
       return bun && bun._id === ingredient._id ? 2 : null;
     }
     return (
-      ingredients.filter((item) => item._id === ingredient._id).length || null
+      ingredients.filter(
+        (item: BurgerConstructorIngredient) => item._id === ingredient._id,
+      ).length || null
     );
   }, [bun, ingredients, ingredient.type, ingredient._id]);
 
@@ -50,7 +60,5 @@ const BurgerIngredientsItem = ({ ingredient }) => {
     </>
   );
 };
-
-BurgerIngredientsItem.propTypes = { ingredient: ingredientPropType.isRequired };
 
 export default BurgerIngredientsItem;

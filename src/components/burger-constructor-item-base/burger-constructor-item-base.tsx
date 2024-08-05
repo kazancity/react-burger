@@ -1,27 +1,30 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor-item-base.module.css";
-import PropTypes from "prop-types";
+import { BurgerConstructorItemType } from "../../types";
+import { FC } from "react";
 
-const BurgerConstructorItemBase = ({
+interface BurgerConstructorItemBaseProps {
+  text: string;
+  extraClass?: string;
+  type?: BurgerConstructorItemType;
+}
+
+const BurgerConstructorItemBase: FC<BurgerConstructorItemBaseProps> = ({
   text,
-  position = "",
+  type,
   extraClass = "",
 }) => {
   return (
     <div className={`${styles.item} ${extraClass}`}>
       <ConstructorElement
+        thumbnail=""
+        price={0}
         text={text}
-        type={position}
+        type={type}
         extraClass={styles.element}
       />
     </div>
   );
-};
-
-BurgerConstructorItemBase.propTypes = {
-  text: PropTypes.string.isRequired,
-  extraClass: PropTypes.string,
-  position: PropTypes.string,
 };
 
 export default BurgerConstructorItemBase;

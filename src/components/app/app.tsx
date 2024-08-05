@@ -24,7 +24,7 @@ import Modal from "../modal/modal";
 import { useEffect } from "react";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 

@@ -6,24 +6,29 @@ import BurgerConstructorItemList from "../burger-constructor-item-list/burger-co
 import { addIngredient } from "../../services/slices/burger-сonstructor-slice";
 import { sendOrder } from "../../services/slices/order-details-slice";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ArrayData, Ingredient, Store } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./burger-constructor.module.css";
 import { useMemo } from "react";
 
 const BurgerConstructor = () => {
-  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
-  const { isLoading } = useSelector((store) => store.burgerIngredients);
-  const { user } = useSelector((store) => store.user);
+  const { bun, ingredients } = useSelector(
+    (store: Store) => store.burgerConstructor,
+  );
+  const { user } = useSelector((store: Store) => store.user);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
-  const totalPrice = useMemo(() => {
+  const totalPrice: number = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;
     return (
       bunPrice +
-      ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
+      ingredients.reduce(
+        (acc: number, ingredient: Ingredient) => acc + ingredient.price,
+        0,
+      )
     );
   }, [bun, ingredients]);
 
@@ -33,7 +38,7 @@ const BurgerConstructor = () => {
     }
 
     if (bun && ingredients.length) {
-      const preparedData = {
+      const preparedData: ArrayData = {
         ingredients: [
           bun._id,
           ...ingredients.map((ingredient) => ingredient._id),
@@ -45,34 +50,28 @@ const BurgerConstructor = () => {
     }
   };
 
-  const handleIngredientDrop = (item) => {
-    dispatch(addIngredient(item.ingredient));
+  const handleIngredientDrop = (ingredient: Ingredient) => {
+    dispatch(addIngredient(ingredient));
   };
 
   return (
-    !isLoading && (
-      <article className={styles.menu_constructor}>
-        <BurgerConstructorItemList
-          bun={bun}
-          ingredients={ingredients}
-          onDropHandler={handleIngredientDrop}
-        />
-        <div className={styles.order}>
-          <span className={styles.checkout}>
-            {totalPrice}
-            <CurrencyIcon type="primary" />
-          </span>
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={handleSubmitOrder}
-          >
-            Оформить заказ
-          </Button>
-        </div>
-      </article>
-    )
+    <article className={styles.menu_constructor}>
+      <BurgerConstructorItemList onDropHandler={handleIngredientDrop} />
+      <div className={styles.order}>
+        <span className={styles.checkout}>
+          {totalPrice}
+          <CurrencyIcon type="primary" />
+        </span>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={handleSubmitOrder}
+        >
+          Оформить заказ
+        </Button>
+      </div>
+    </article>
   );
 };
 
