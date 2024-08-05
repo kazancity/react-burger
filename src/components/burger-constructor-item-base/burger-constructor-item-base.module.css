@@ -12,9 +12,9 @@
 .element > span * {
   display: none;
 }
-.element > span span {
+.element > span span:nth-child(2) {
   margin: 0;
   display: block;
-  line-height: 40px;
+  line-height: 45px;
   text-align: center;
 }
