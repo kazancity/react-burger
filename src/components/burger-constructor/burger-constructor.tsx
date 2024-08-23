@@ -2,24 +2,24 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  addIngredient,
+  clearBurgerConstructor,
+} from "../../services/slices/burger-constructor-slice";
 import BurgerConstructorItemList from "../burger-constructor-item-list/burger-constructor-item-list";
-import { addIngredient } from "../../services/slices/burger-сonstructor-slice";
 import { sendOrder } from "../../services/slices/order-details-slice";
+import { useDispatch, useSelector } from "../../hooks/hooks-types";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ArrayData, Ingredient, Store } from "../../types";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./burger-constructor.module.css";
+import { ArrayData, Ingredient } from "../../types";
 import { useMemo } from "react";
 
 const BurgerConstructor = () => {
-  const { bun, ingredients } = useSelector(
-    (store: Store) => store.burgerConstructor,
-  );
-  const { user } = useSelector((store: Store) => store.user);
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+  const { user } = useSelector((store) => store.user);
   const navigate = useNavigate();
   const location = useLocation();
-
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const totalPrice: number = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;
@@ -45,7 +45,9 @@ const BurgerConstructor = () => {
           bun._id,
         ],
       };
-      dispatch(sendOrder(preparedData));
+      dispatch(sendOrder(preparedData)).then(() =>
+        dispatch(clearBurgerConstructor()),
+      );
       navigate("/", { state: { backgroundLocation: location } });
     }
   };
