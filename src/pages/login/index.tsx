@@ -4,9 +4,9 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from "../../services/slices/user-slice";
+import { useDispatch } from "../../hooks/hooks-types";
 import { Link, useLocation } from "react-router-dom";
 import useForm from "../../hooks/use-form";
-import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import { FormEvent } from "react";
 
@@ -15,7 +15,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
