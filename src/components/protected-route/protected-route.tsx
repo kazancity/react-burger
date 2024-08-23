@@ -1,8 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from "../../hooks/hooks-types";
 import { GridLoader } from "react-spinners";
-import { useSelector } from "react-redux";
 import { FC, ReactElement } from "react";
-import { Store } from "../../types";
 
 interface ProtectedRouteProps {
   component: ReactElement;
@@ -14,7 +13,7 @@ interface Component {
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ component, onlyAuth }) => {
-  const { user, isAuthChecked } = useSelector((store: Store) => store.user);
+  const { user, isAuthChecked } = useSelector((store) => store.user);
   const location = useLocation();
 
   if (!isAuthChecked) {
