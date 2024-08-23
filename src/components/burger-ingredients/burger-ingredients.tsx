@@ -2,14 +2,14 @@ import BurgerIngredientsItem from "../burger-ingredients-item/burger-ingredients
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./burger-ingredients.module.css";
-import { IngredientType, Store } from "../../types";
+import { useSelector } from "../../hooks/hooks-types";
+import { IngredientType } from "../../types";
 import { GridLoader } from "react-spinners";
-import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
 
 const BurgerIngredients = () => {
   const { isLoading, isError, data } = useSelector(
-    (store: Store) => store.burgerIngredients,
+    (store) => store.burgerIngredients,
   );
   const tabsRef = useRef<HTMLDivElement>(null);
   const groupBunRef = useRef<HTMLHeadingElement>(null);
