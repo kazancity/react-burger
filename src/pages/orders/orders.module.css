@@ -1,0 +1,5 @@
+.orders {
+  max-width: 860px;
+  position: relative;
+  height: calc(100vh - 208px);
+}
