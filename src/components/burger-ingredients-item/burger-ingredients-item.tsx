@@ -2,10 +2,10 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerConstructorIngredient, Ingredient, Store } from "../../types";
 import { setData } from "../../services/slices/ingredient-details-slice";
+import { BurgerConstructorIngredient, Ingredient } from "../../types";
+import { useDispatch, useSelector } from "../../hooks/hooks-types";
 import styles from "./burger-ingredients-item.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { FC, useMemo } from "react";
 import { useDrag } from "react-dnd";
 
@@ -16,9 +16,7 @@ interface BurgerIngredientItemProps {
 const BurgerIngredientsItem: FC<BurgerIngredientItemProps> = ({
   ingredient,
 }) => {
-  const { bun, ingredients } = useSelector(
-    (store: Store) => store.burgerConstructor,
-  );
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
 
   const counter = useMemo(() => {
     if (ingredient.type === "bun") {
