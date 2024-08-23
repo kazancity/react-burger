@@ -6,7 +6,6 @@ li {
   row-gap: 8px;
   column-gap: 8px;
   list-style: none;
-  align-items: center;
 }
 .item_list {
   display: flex;
