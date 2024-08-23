@@ -1,8 +1,8 @@
 import "./index.css";
-import store from "./services/store";
 import { Provider } from "react-redux";
 import App from "./components/app/app";
 import ReactDOM from "react-dom/client";
+import { store } from "./services/store";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
