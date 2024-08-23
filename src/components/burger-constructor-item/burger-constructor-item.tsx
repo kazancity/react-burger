@@ -5,10 +5,10 @@ import {
 import {
   sortIngredients,
   removeIngredient,
-} from "../../services/slices/burger-сonstructor-slice";
+} from "../../services/slices/burger-constructor-slice";
 import { memo, FC } from "react";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
+import { useDispatch } from "../../hooks/hooks-types";
 import { BurgerConstructorIngredient } from "../../types";
 import styles from "./burger-constructor-item.module.css";
 
