@@ -3,14 +3,13 @@ import {
   BurgerConstructorIngredient,
   ConstructorIngredients,
   Ingredient,
-  Store,
 } from "../../types";
 import BurgerConstructorItemBase from "../burger-constructor-item-base/burger-constructor-item-base";
 import BurgerConstructorItemBun from "../burger-constructor-item-bun/burger-constructor-item-bun";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import styles from "./burger-constructor-item-list.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks-types";
 import update from "immutability-helper";
 import { useDrop } from "react-dnd";
 
@@ -21,7 +20,7 @@ interface BurgerConstructorListProps {
 const BurgerConstructorItemList: FC<BurgerConstructorListProps> = memo(
   function BurgerConstructorItemList({ onDropHandler }) {
     const { bun, ingredients } = useSelector(
-      (store: Store) => store.burgerConstructor,
+      (store) => store.burgerConstructor,
     );
 
     const [constructorIngredients, setConstructorIngredients] =

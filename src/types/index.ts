@@ -1,28 +1,105 @@
-export interface Ingredient {
-  carbohydrates: number;
-  image_mobile: string;
-  type: IngredientType;
-  image_large: string;
-  calories: number;
-  proteins: number;
-  image: string;
-  price: number;
+export type ServerResponse = {
+  success: boolean;
+};
+
+export type ServerResponseGeneric<T> = ServerResponse & T;
+
+export type ServerMessageResponse = ServerResponseGeneric<{
+  message: string;
+}>;
+
+export type ServerRefreshResponse = ServerResponseGeneric<{
+  refreshToken: string;
+  accessToken: string;
+}>;
+
+export type ServerUserResponse = ServerRefreshResponse & {
+  user: User;
+};
+
+export type ServerIngredientsResponse = ServerResponseGeneric<{
+  data: Ingredients;
+}>;
+
+export type ServerOrderResponse = ServerResponseGeneric<{
   name: string;
-  fat: number;
+  order: Order;
+}>;
+
+export type ServerOrdersResponse = ServerResponseGeneric<{
+  name: string;
+  orders: Orders;
+}>;
+
+export type HTTPMethods = "GET" | "POST" | "PATCH";
+
+export interface Options {
+  method?: HTTPMethods;
+  body?: string;
+  headers: {
+    "Content-Type"?: string;
+    authorization?: string;
+  };
+}
+
+export type RequestData = FormData | ArrayData;
+
+export interface Ingredient {
   _id: string;
+  name: string;
+  type: IngredientType;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
   __v: number;
 }
 
+export type Ingredients = Array<Ingredient>;
+
+export interface BurgerConstructorIngredient extends Ingredient {
+  id: string;
+}
+
+export type ConstructorIngredients = Array<BurgerConstructorIngredient>;
+
+export interface IngredientWithAmount extends Ingredient {
+  amount: number;
+}
+
+export type BurgerConstructorItemType = "top" | "bottom";
+
+export type IngredientType = "bun" | "sauce" | "main";
+
+export interface FormData {
+  [name: string]: string;
+}
+
+export interface ArrayData {
+  [name: string]: Array<string>;
+}
+
 export interface Order {
-  ingredients: Ingredients;
+  ingredients: string[];
+  _id: string;
+  status: "done" | "pending" | "created";
+  name: string;
   createdAt: string;
   updatedAt: string;
-  status: string;
   number: number;
-  price: number;
-  owner: Owner;
+  owner?: Owner;
+  price?: number;
+}
+
+export type Orders = Array<Order>;
+
+export interface User {
+  email: string;
   name: string;
-  _id: string;
 }
 
 export interface Owner extends User {
@@ -30,96 +107,58 @@ export interface Owner extends User {
   updatedAt: string;
 }
 
-export interface ArrayData {
-  [name: string]: Array<string>;
+export enum Statuses {
+  done = "Выполнен",
+  created = "Создан",
+  pending = "Готовится",
+  canceled = "Отменен",
 }
 
-export interface FormData {
-  [name: string]: string;
-}
-
-export interface User {
-  email: string;
-  name: string;
-}
-
-export type ConstructorIngredients = Array<BurgerConstructorIngredient>;
-
-export interface BurgerConstructorIngredient extends Ingredient {
-  id: string;
-}
-
-export type BurgerConstructorItemType = "top" | "bottom";
-
-export type IngredientType = "bun" | "sauce" | "main";
-
-export type Ingredients = Array<Ingredient>;
-
-export type ServerIngredientsResponse = ServerResponseGeneric<{
-  data: Ingredients;
-}>;
-
-export type ServerMessageResponse = ServerResponseGeneric<{ message: string }>;
-
-export type ServerRefreshResponse = ServerResponseGeneric<{
-  refreshToken: string;
-  accessToken: string;
-}>;
-
-export type ServerUserResponse = ServerRefreshResponse & { user: User };
-
-export type ServerOrderResponse = ServerResponseGeneric<{
-  name: string;
-  order: Order;
-}>;
-
-export type ServerResponseGeneric<T> = ServerResponse & T;
-
-export type HTTPMethods = "GET" | "POST" | "PATCH";
-
-export type ServerResponse = { success: boolean };
-
-export type RequestData = FormData | ArrayData;
-
-export interface Options {
-  headers: {
-    "Content-Type"?: string;
-    authorization?: string;
-  };
-  method?: HTTPMethods;
-  body?: string;
-}
-
-export interface Store {
-  burgerConstructor: BurgerConstructorStore;
-  ingredientDetails: IngredientDetailsStore;
-  burgerIngredients: BurgerIngredientStore;
-  orderDetails: OrderDetailsStore;
-  user: UserStore;
-}
-
-interface BurgerConstructorStore {
+export interface BurgerConstructorStore {
   bun: BurgerConstructorIngredient | null;
   ingredients: ConstructorIngredients;
 }
 
-interface UserStore {
-  isAuthChecked: boolean;
+export interface UserStore {
   user: User | null;
+  isAuthChecked: boolean;
 }
 
-interface BurgerIngredientStore {
+export interface BurgerIngredientStore {
   data: Ingredients | null;
   isLoading: boolean;
   isError: boolean;
 }
 
-interface IngredientDetailsStore {
+export interface IngredientDetailsStore {
   data: Ingredient | null;
 }
 
-interface OrderDetailsStore {
-  data: ServerOrderResponse | null;
+export interface OrderDetailsStore {
+  data: Order | null;
   isLoading: boolean;
   isError: boolean;
+}
+
+export interface WebSocketStore {
+  status: WebSocketStatus;
+  orders: Orders;
+  total: number;
+  totalToday: number;
+  error: string;
+}
+// выше store
+
+export interface WSOrderResponse {
+  success: boolean;
+  orders: Orders;
+  total: number;
+  totalToday: number;
+}
+
+export enum WebSocketStatus {
+  OPENING = "opening...",
+  CLOSING = "closing...",
+  ONLINE = "online",
+  OFFLINE = "offline",
 }

@@ -6,9 +6,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/slices/user-slice";
+import { useDispatch } from "../../hooks/hooks-types";
 import useForm from "../../hooks/use-form";
 import styles from "./register.module.css";
-import { useDispatch } from "react-redux";
 import { FormEvent } from "react";
 
 export default function RegisterPage() {
@@ -18,7 +18,7 @@ export default function RegisterPage() {
     password: "",
   });
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

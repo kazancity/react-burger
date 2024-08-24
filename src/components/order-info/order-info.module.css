@@ -1,0 +1,66 @@
+.done {
+  color: #00cccc;
+}
+.price {
+  display: flex;
+  row-gap: 8px;
+  column-gap: 8px;
+}
+.amount {
+  margin-left: auto;
+}
+.ingredient {
+  display: flex;
+  row-gap: 16px;
+  column-gap: 16px;
+  margin-right: 24px;
+  align-items: center;
+}
+.order {
+  margin: 60px;
+  display: flex;
+  max-width: 664px;
+  flex-direction: column;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+}
+.preview {
+  top: 50%;
+  left: 50%;
+  object-fit: cover;
+  position: absolute;
+  border-radius: 100px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  background-color: #131316;
+  transform: translate(-50%, -50%);
+}
+.ingredients {
+  display: flex;
+  row-gap: 16px;
+  list-style: none;
+  overflow-y: auto;
+  column-gap: 16px;
+  max-height: 312px;
+  scrollbar-width: thin;
+  flex-direction: column;
+  scrollbar-color: #8585ad #2f2f37;
+}
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+.ingredients::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+.ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.preview-container {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  border-radius: 100px;
+  background-image: linear-gradient(to right, #801ab2 0%, #4c4cff 100%);
+}

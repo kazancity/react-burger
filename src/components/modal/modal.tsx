@@ -1,11 +1,10 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { PropsWithChildren, ReactPortal, useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { useSelector } from "../../hooks/hooks-types";
 import { GridLoader } from "react-spinners";
-import { useSelector } from "react-redux";
 import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
-import { Store } from "../../types";
 
 interface ModalProps {
   onClose: () => void;
@@ -15,7 +14,7 @@ const Modal = ({
   children,
   onClose,
 }: PropsWithChildren<ModalProps>): ReactPortal => {
-  const { isLoading } = useSelector((store: Store) => store.orderDetails);
+  const { isLoading } = useSelector((store) => store.orderDetails);
 
   useEffect(() => {
     const closeEsc = (e: KeyboardEvent) => {

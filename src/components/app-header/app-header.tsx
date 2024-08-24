@@ -4,13 +4,12 @@ import {
   BurgerIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "../../hooks/hooks-types";
 import styles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Store } from "../../types";
 
 const AppHeader = () => {
-  const { user } = useSelector((store: Store) => store.user);
+  const { user } = useSelector((store) => store.user);
 
   return (
     <header className={styles.header}>
@@ -40,7 +39,7 @@ const AppHeader = () => {
           </li>
           <li className={styles.last_item}>
             <NavLink
-              to="/list"
+              to="/feed"
               className={({ isActive }) =>
                 isActive
                   ? `${styles.link}`

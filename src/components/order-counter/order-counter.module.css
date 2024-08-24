@@ -1,0 +1,54 @@
+.done {
+  color: #00cccc;
+}
+.status {
+  max-height: 340px;
+}
+.all-time {
+  display: flex;
+  flex-direction: column;
+}
+.today {
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  display: flex;
+  row-gap: 60px;
+  column-gap: 60px;
+  flex-direction: column;
+}
+.list {
+  row-gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 100%;
+  column-gap: 8px;
+  list-style: none;
+  margin-top: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  flex-direction: column;
+  scrollbar-color: #8585ad #2f2f37;
+}
+.list::-webkit-scrollbar {
+  height: 8px;
+}
+.list::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.total {
+  text-shadow:
+    0 4px 32px rgba(51, 51, 255, 0.5),
+    0 0 8px rgba(51, 51, 255, 0.25);
+}
+.board {
+  row-gap: 28px;
+  display: grid;
+  column-gap: 28px;
+  grid-template-columns: calc(50% - 14px) calc(50% - 14px);
+}
