@@ -12,8 +12,8 @@ import ordersSlice, { webSocketActions } from "./slices/websocket-slice";
 import burgerIngredientsSlice from "./slices/burger-ingredients-slice";
 import { socketMiddleware } from "./middleware/websocket-middleware";
 import { wsActions } from "./slices/websocket-slice";
-import { WebSocketStatus } from "../types";
 import userSlice from "./slices/user-slice";
+import { WebSocketStatus } from "../types";
 
 export const rootReducer = combineSlices(
   burgerIngredientsSlice,
@@ -24,7 +24,7 @@ export const rootReducer = combineSlices(
   ordersSlice,
 );
 
-const preloadedState = {
+export const preloadedState = {
   burgerIngredients: { data: null, isLoading: false, isError: false },
   burgerConstructor: { bun: null, ingredients: [] },
   ingredientDetails: { data: null },
