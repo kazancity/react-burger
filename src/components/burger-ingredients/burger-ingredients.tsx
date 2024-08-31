@@ -34,16 +34,19 @@ const BurgerIngredients = () => {
               : prev,
           ),
       );
-
-      setActiveTab("bun");
-      if (0 === closestIndex) {
-        if (activeTab !== "bun") setActiveTab("bun");
-      }
-      if (1 === closestIndex) {
-        if (activeTab !== "sauce") setActiveTab("sauce");
-      }
-      if (2 === closestIndex) {
-        if (activeTab !== "main") setActiveTab("main");
+      switch (closestIndex) {
+        case 0:
+          if (activeTab !== 'bun') setActiveTab('bun');
+          break;
+        case 1:
+          if (activeTab !== 'sauce') setActiveTab('sauce');
+          break;
+        case 2:
+          if (activeTab !== 'main') setActiveTab('main');
+          break;
+        default:
+          setActiveTab('bun');
+          break;
       }
     }
   };
