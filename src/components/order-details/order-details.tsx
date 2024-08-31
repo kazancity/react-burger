@@ -21,7 +21,9 @@ const OrderDetails = () => {
     <div className={styles.order}>
       {order ? (
         <>
-          <span className={styles.number}>{order.number}</span>
+          <span className={styles.number} data-testid="order-number">
+            {order.number}
+          </span>
           <span className={styles.text_main_medium}>идентификатор заказа</span>
           <img src={done} alt="Done" className={styles.text_60} />
           <span className={`${styles.text_main} ${styles.text_60}`}>
