@@ -36,16 +36,16 @@ const BurgerIngredients = () => {
       );
       switch (closestIndex) {
         case 0:
-          if (activeTab !== 'bun') setActiveTab('bun');
+          if (activeTab !== "bun") setActiveTab("bun");
           break;
         case 1:
-          if (activeTab !== 'sauce') setActiveTab('sauce');
+          if (activeTab !== "sauce") setActiveTab("sauce");
           break;
         case 2:
-          if (activeTab !== 'main') setActiveTab('main');
+          if (activeTab !== "main") setActiveTab("main");
           break;
         default:
-          setActiveTab('bun');
+          setActiveTab("bun");
           break;
       }
     }
@@ -106,6 +106,7 @@ const BurgerIngredients = () => {
           <div
             className={styles.items_group}
             onScroll={handleScrollIngredientGroup}
+            data-testid="ingredient-group"
           >
             <section>
               <h2 className="text text_type_main-medium" ref={groupBunRef}>
