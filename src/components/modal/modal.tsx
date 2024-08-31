@@ -44,8 +44,12 @@ const Modal = ({
       ) : (
         <>
           <ModalOverlay onClick={onClose} />
-          <div className={styles.modal}>
-            <span className={styles.close} onClick={onClose}>
+          <div className={styles.modal} data-testid="modal">
+            <span
+              className={styles.close}
+              onClick={onClose}
+              data-testid="modal-close"
+            >
               <CloseIcon type="primary" />
             </span>
             {children}
