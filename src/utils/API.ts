@@ -116,13 +116,27 @@ export const requestUser = () =>
   requestWithAccessToken<ServerUserResponse>("auth/user").then((res) =>
     res.success ? res.user : Promise.reject(res),
   );
+
 export const requestUpdateUser = (data: FormData) =>
   requestWithAccessToken<ServerUserResponse>("auth/user", "PATCH", data).then(
     (res) => (res.success ? res.user : Promise.reject(res)),
   );
 
+export const requestUserAuth = () => {
+  if (localStorage.getItem("accessToken")) {
+    return requestUser().catch((res) => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      return Promise.reject(res);
+    });
+  } else {
+    return Promise.reject();
+  }
+};
+
 export const passwordReset = (data: FormData) =>
   requestPost<ServerMessageResponse>("password-reset/reset", data);
+
 export const passwordResetRequest = (data: FormData) =>
   requestPost<ServerMessageResponse>("password-reset", data);
 
@@ -144,6 +158,7 @@ export const requestSendOrder = (data: ArrayData) =>
   requestWithAccessToken<ServerOrderResponse>("orders", "POST", data).then(
     (res) => (res.success ? res.order : Promise.reject(res)),
   );
+
 export const requestGetOrder = (orderNumber: string) =>
   request<ServerOrdersResponse>(`orders/${orderNumber}`).then((res) =>
     res.success ? res.orders[0] : Promise.reject(res),
