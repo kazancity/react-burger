@@ -1,5 +1,5 @@
-import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WebSocketStatus, WebSocketStore, WSOrderResponse } from "../../types";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const wsOpen = createAction("webSocket/open");
 export const wsClose = createAction("webSocket/close");
@@ -10,7 +10,7 @@ export const wsError = createAction<string, "webSocket/error">(
   "webSocket/error",
 );
 
-const initialState: WebSocketStore = {
+export const initialState: WebSocketStore = {
   status: WebSocketStatus.OFFLINE,
   orders: [],
   total: 0,
