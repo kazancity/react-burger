@@ -7,7 +7,7 @@ export const getIngredients = createAsyncThunk(
   fetchIngredients,
 );
 
-const initialState = {
+export const initialState = {
   data: null,
   isLoading: false,
   isError: false,
