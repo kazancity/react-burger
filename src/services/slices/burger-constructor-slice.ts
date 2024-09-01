@@ -3,10 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BurgerConstructorStore } from "../../types";
 import { v4 as uuidv4 } from "uuid";
 
-const initialState = {
+export const initialState = {
   bun: null,
   ingredients: [],
 } satisfies BurgerConstructorStore as BurgerConstructorStore;
+
+export const prepareIngredient = (ingredient: Ingredient) => ({
+  payload: { ...ingredient, id: uuidv4() } as BurgerConstructorIngredient,
+});
 
 const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
@@ -17,9 +21,7 @@ const burgerConstructorSlice = createSlice({
         action.payload.type === "bun"
           ? { ...state, bun: action.payload }
           : { ...state, ingredients: [...state.ingredients, action.payload] },
-      prepare: (ingredient: Ingredient) => ({
-        payload: { ...ingredient, id: uuidv4() },
-      }),
+      prepare: prepareIngredient,
     },
     removeIngredient: (
       state,
