@@ -3,6 +3,7 @@ import {
   logout,
   register,
   requestUser,
+  requestUserAuth,
   requestUpdateUser,
 } from "../../utils/API";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -16,23 +17,12 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   requestUpdateUser,
 );
-
 export const checkUserAuth = createAsyncThunk(
   "user/checkUserAuth",
-  async (_, thunkAPI) => {
-    if (localStorage.getItem("accessToken")) {
-      await thunkAPI
-        .dispatch(getUser())
-        .unwrap()
-        .catch(() => {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-        });
-    }
-  },
+  requestUserAuth,
 );
 
-const initialState = {
+export const initialState = {
   user: null,
   isAuthChecked: false,
 } satisfies UserStore as UserStore;
@@ -57,7 +47,8 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
       })
-      .addCase(checkUserAuth.fulfilled, (state) => {
+      .addCase(checkUserAuth.fulfilled, (state, action) => {
+        state.user = action.payload;
         state.isAuthChecked = true;
       })
       .addCase(checkUserAuth.rejected, (state) => {
