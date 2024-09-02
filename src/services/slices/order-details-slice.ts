@@ -3,7 +3,7 @@ import { requestGetOrder, requestSendOrder } from "../../utils/API";
 import { OrderDetailsStore } from "../../types";
 import { Order } from "../../types";
 
-const initialState = {
+export const initialState = {
   data: null,
   isLoading: false,
   isError: false,
@@ -22,11 +22,7 @@ const orderDetailsSlice = createSlice({
   name: "orderDetails",
   initialState,
   reducers: {
-    clearOrder: (state) => ({
-      isLoading: false,
-      isError: false,
-      data: null,
-    }),
+    clearOrder: () => initialState,
     updateOrder: (state, action: PayloadAction<Order>) => ({
       ...state,
       data: action.payload,

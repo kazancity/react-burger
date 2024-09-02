@@ -81,7 +81,11 @@ const BurgerConstructorItemList: FC<BurgerConstructorListProps> = memo(
       );
 
     return (
-      <section className={styles.item_section} ref={dropTarget}>
+      <section
+        className={styles.item_section}
+        ref={dropTarget}
+        data-testid="constructor-drop-target"
+      >
         {addBun("top")}
         <ul className={styles.item_list}>
           {constructorIngredients.length ? (
