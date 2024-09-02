@@ -1,3 +1,5 @@
+const modalSelector = '[data-testid="modal"]';
+
 beforeEach(() => {
   cy.intercept("GET", "api/auth/user", { fixture: "user.json" }).as(
     "checkUserAuth",
@@ -30,15 +32,15 @@ describe("ingredient details in a modal window", () => {
 
   it("the modal should be opened and closed correctly", () => {
     cy.get("@group").contains("Краторная булка N-200i").should("exist").click();
-    cy.get('[data-testid="modal"]').should("exist");
+    cy.get(modalSelector).should("exist");
     cy.get('[data-testid="modal-close"]').should("exist").click();
-    cy.get('[data-testid="modal"]').should("not.exist");
+    cy.get(modalSelector).should("not.exist");
   });
 
   it("the URL and content of the modal should be correct", () => {
     cy.get("@group").contains("Краторная булка N-200i").should("exist").click();
     cy.url().should("contain", "ingredients/643d69a5c3f7b9001cfa093c");
-    cy.get('[data-testid="modal"]')
+    cy.get(modalSelector)
       .should("contain.text", "Детали ингредиента")
       .and(
         "contain.text",
